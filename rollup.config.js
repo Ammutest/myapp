@@ -4,6 +4,9 @@ console.log('Starting the build...');
 import { terser } from 'rollup-plugin-terser';  // Optional: to minify the output
 import resolve from 'rollup-plugin-node-resolve';  // Resolves node_modules
 import commonjs from 'rollup-plugin-commonjs';  // Converts CommonJS modules to ES6
+import postcss from 'rollup-plugin-postcss';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
 
 export default {
   input: 'src/index.js',  // Entry point for your library
@@ -35,5 +38,9 @@ export default {
       babelHelpers: 'bundled',  // Ensure Babel helpers are bundled
     }),
     terser(),  // Minifies the output (optional, for production)
+    postcss({
+      extract: 'style.css',
+      plugins: [autoprefixer(), cssnano()],
+    }),
   ],
 };
